@@ -36,38 +36,26 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
- * This file contains an minimal example of a Linear Tele "OpMode".
- *
- * This particular OpMode just executes a basic Tank Drive, Arm and 2 Servos for a PushBot
- * It includes all the skeletal structure that all linear OpModes contain.
- *
- * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
- * Comment out the @Disabled line to add this opmode to the Driver Station OpMode list
+ * An example toggle button by Stetson's sweeper button toggle program from Dan
+ * Button 'a' will turn sweeper motor on. Consecutive presses will alternate direction of motor
+ * Motor stays running until button 'x' is pressed.
  */
 
-@TeleOp(name="Example: TeleOp", group="Examples")  // @Autonomous(...) is the other common choice
+@TeleOp(name="buttonToggle", group="Examples")  // @Autonomous(...) is the other common choice
 @Disabled
-public class Example_TeleOp extends LinearOpMode {
+public class TestStetsonToggleButton extends LinearOpMode {
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
     //motors
     DcMotor motorLeft = null;
     DcMotor motorRight = null;
-    DcMotor motorArm = null;
+    DcMotor sweeper = null;
 
-    //servos
-    Servo servoHandL = null;
-    Servo servoHandR = null;
-
-    //Create and set default hand positions variables. To be determined based on your build
-    double CLOSED = 0.2;
-    double OPEN = 0.8;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -81,19 +69,18 @@ public class Example_TeleOp extends LinearOpMode {
          */
          motorLeft  = hardwareMap.dcMotor.get("motorL");
          motorRight = hardwareMap.dcMotor.get("motorR");
-         motorArm = hardwareMap.dcMotor.get("motorArm");
-         servoHandL = hardwareMap.servo.get("servoHandL"); //assuming a pushBot configuration of two servo grippers
-         servoHandR = hardwareMap.servo.get("servoHandR");
+         sweeper = hardwareMap.dcMotor.get("sweeper");
+
 
         // eg: Set the drive motor directions:
         // "Reverse" the motor that runs backwards when connected directly to the battery
          motorLeft.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
          motorRight.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
-         motorArm.setDirection(DcMotor.Direction.FORWARD); // Can change based on motor configuration
+         sweeper.setDirection(DcMotor.Direction.FORWARD); // Can change based on motor configuration
 
-        //Set servo hand grippers to open position.
-         servoHandL.setPosition(OPEN);
-         servoHandR.setPosition(OPEN);
+        // Declare some variables
+        double  motorDirection = -1.0;   //Keeps track of the direction for the sweeper motor
+        boolean buttonPressed  = false;  //Keeps track of whether the button was previously pressed or not so we know when it is released
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -112,26 +99,32 @@ public class Example_TeleOp extends LinearOpMode {
             motorLeft.setPower(gamepad1.left_stick_y);
             motorRight.setPower(gamepad1.right_stick_y);
 
-            // Arm Control - Uses dual buttons to control motor direction
-            if(gamepad1.right_bumper)
+
+//Toggle Button
+            if(gamepad1.a) //button 'a' is pressed
             {
-                motorArm.setPower(-gamepad1.right_trigger); // if both Bumper + Trigger, then negative power, runs arm down
+                // Only do the following if this is the first time the button is pressed
+                // since the last time it was released
+                if (!buttonPressed)
+                {
+                    //Multiplying the motorDirection by -1 will invert the value and reverse the motor direction
+                    motorDirection = motorDirection * -1.0;
+
+                    //Set button pressed to true so that we don't invert it again until the button is released and pressed again
+                    buttonPressed = true;
+                }
+                //Set the sweeper power to whatever the motorDirection value is
+                sweeper.setPower(motorDirection);
             }
-            else
+            else //Button a is not currently pressed so set our variable accordingly
             {
-                motorArm.setPower(gamepad1.right_trigger);  // else trigger positive value, runs arm up
+                buttonPressed = false;
             }
 
-            //servo commands
-            if(gamepad1.a) //button 'a' will open
+            if (gamepad1.x) //button 'x' will stop sweeper and reset the motor direction to initial state
             {
-                servoHandR.setPosition(OPEN);
-                servoHandL.setPosition(OPEN);
-            }
-            else if (gamepad1.b) //button 'b' will close
-            {
-                servoHandR.setPosition(CLOSED);
-                servoHandL.setPosition(CLOSED);
+                sweeper.setPower(0.0);
+                motorDirection = -1.0;
             }
 
 

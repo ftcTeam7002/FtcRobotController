@@ -35,8 +35,6 @@ package org.firstinspires.ftc.teamcode.ExampleCode;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -56,7 +54,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class TestBed_TeleOp extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
-    MyBotHardwareSetup robot        = new MyBotHardwareSetup();  // Use MyBotHardware Setup
+    TestBotHardwareSetup robot        = new TestBotHardwareSetup();  // Use MyBotHardware Setup
 
     @Override
     public void runOpMode() throws InterruptedException {

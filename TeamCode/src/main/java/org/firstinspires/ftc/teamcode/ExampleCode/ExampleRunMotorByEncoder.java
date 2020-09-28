@@ -2,11 +2,8 @@ package org.firstinspires.ftc.teamcode.ExampleCode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -33,7 +30,7 @@ public class ExampleRunMotorByEncoder extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     //  DON'T FORGET TO RENAME HARDWARE CONFIG FILE NAME HERE!!!!!!
-    MyBotHardwareSetup robot = new MyBotHardwareSetup(); //set up remote to robot hardware configuration
+    TestBotHardwareSetup robot = new TestBotHardwareSetup(); //set up remote to robot hardware configuration
 
     //constructor
     public ExampleRunMotorByEncoder() {}

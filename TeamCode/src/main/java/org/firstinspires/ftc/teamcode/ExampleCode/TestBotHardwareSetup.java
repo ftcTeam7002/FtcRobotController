@@ -30,7 +30,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
  *
  */
 
-public class MyBotHardwareSetup  {
+public class TestBotHardwareSetup {
 
    /* Declare Public OpMode members.
     *these are the null statements to make sure nothing is stored in the variables.
@@ -65,7 +65,7 @@ public class MyBotHardwareSetup  {
    /* Constructor   // this is not required as JAVA does it for you, but useful if you want to add
     * function to this method when called in OpModes.
     */
-    public  MyBotHardwareSetup() {
+    public TestBotHardwareSetup() {
     }
 
     //Initialize standard Hardware interfaces

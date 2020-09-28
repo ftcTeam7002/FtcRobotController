@@ -4,8 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-import org.firstinspires.ftc.teamcode.ExampleCode.MyBotHardwareSetup;
-
 
 /**
  *  Created by TeameurekaRobotics on 12/30/2016
@@ -22,9 +20,9 @@ import org.firstinspires.ftc.teamcode.ExampleCode.MyBotHardwareSetup;
 
 @TeleOp(name="Example: TestHardwareTeleOp", group="Examples")  // @Autonomous(...) is the other common choice
 @Disabled
-public class TestHardwareTeleOp extends LinearOpMode {
+public class TestTeleOp_External_Hardware extends LinearOpMode {
 
-    MyBotHardwareSetup robot = new MyBotHardwareSetup(); //set up remote to robot hardware configuration
+    TestBotHardwareSetup robot = new TestBotHardwareSetup(); //set up remote to robot hardware configuration
 
     @Override
     public void runOpMode() throws InterruptedException {
