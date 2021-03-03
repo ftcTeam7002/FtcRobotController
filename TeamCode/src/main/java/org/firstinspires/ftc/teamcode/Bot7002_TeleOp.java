@@ -32,12 +32,9 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.teamcode.ExampleCode.TestBotHardwareSetup;
 
 /**
  * This file contains a configuration for Mr. Reynolds' TestBed motors/servos/sensor
@@ -56,14 +53,14 @@ import org.firstinspires.ftc.teamcode.ExampleCode.TestBotHardwareSetup;
 public class Bot7002_TeleOp extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
-    Bot7002HardwareSetup robot        = new Bot7002HardwareSetup();  // Use MyBotHardware Setup
+    Bot7002HardwareSetup robot = new Bot7002HardwareSetup();  // Use MyBotHardware Setup
 
     @Override
     public void runOpMode() throws InterruptedException {
 
         robot.init(hardwareMap);                //Initialize hardware from the MyBotHardware Setup
 
-        // Wait for the game to start (driver presses PLAY)
+            // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
 
@@ -83,26 +80,46 @@ public class Bot7002_TeleOp extends LinearOpMode {
             // Arm Control - Uses dual buttons to control motor direction
             if(gamepad1.right_bumper)
             {
-                robot.motorArm.setPower(-gamepad1.right_trigger); // if both Bumper + Trigger, then negative power, runs arm down
+                robot.motorSweep.setPower(-gamepad1.right_trigger); // if both Bumper + Trigger, then negative power, runs arm down
             }
             else
             {
-                robot.motorArm.setPower(gamepad1.right_trigger);  // else trigger positive value, runs arm up
+                robot.motorSweep.setPower(gamepad1.right_trigger);  // else trigger positive value, runs arm up
             }
+
 
             //servo commands
+
+            //Shoter lift controls
             if(gamepad1.a) //button 'a' will open
             {
-
-                robot.servoGrabber.setPosition(robot.OPEN);
-            }
-            else if (gamepad1.b) //button 'b' will close
+                robot.Lifter.setPosition(robot.DOWN);
+            } else if (gamepad1.b) //button 'b' will close
             {
 
-                robot.servoGrabber.setPosition(robot.CLOSED);
+                robot.Lifter.setPosition(robot.UP);
             }
 
-          
+            //Hook controls
+            if(gamepad1.x) //button 'x' will open
+            {
+                robot.Hook.setPosition(robot.DOWN);
+            } else if (gamepad1.y) //button 'y' will close
+            {
+                robot.Lifter.setPosition(robot.UP);
+            }
+
+
+            //Launcher and 2nd sweeper
+            if(gamepad1.left_bumper)
+            {
+                robot.motorLauncher.setPower(-gamepad1.left_trigger); // if both Bumper + Trigger, then negative power, runs sweeper
+            }
+            else
+            {
+                robot.motorLauncher.setPower(gamepad1.left_trigger); // else trigger positive value, runs sweeper other way
+
+            }
 
 
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
